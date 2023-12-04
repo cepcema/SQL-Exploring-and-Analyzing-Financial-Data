@@ -23,4 +23,4 @@ SELECT
 FROM stocks.stocks27;
 </pre>
 
-![Result](https://notebook.zoho.eu/api/v1/notebooks/cuttqa2bf24e45a2d41119564c377aaeee4d5/notecards/ebqns8e7c2a7c347948358d4396df364de618/resources/ebqnse920a225a27d44d98e5baaed27b54718)
+![Result](https://iili.io/JzmQmI1.jpg)
