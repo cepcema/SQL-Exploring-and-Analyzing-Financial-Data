@@ -46,10 +46,31 @@ FROM stocks27
 GROUP BY AdjustedSector;
 </pre>
 
-
 ![Result](https://iili.io/Jzpd1Dv.jpg)
 
-###2. Data Analysis
+1.5 Checking for NON null values
+<pre>
+SELECT
+    'Symbol' AS ColumnName,
+    COUNT(*) AS TotalRows,
+    COUNT(Symbol) AS NonNullCount,
+    COUNT(*) - COUNT(Symbol) AS MissingCount,
+    (COUNT(Symbol) * 100.0) / COUNT(*) AS NonNullPercentage
+FROM stocks.stocks27
+UNION
+SELECT
+    'Last' AS ColumnName,
+    COUNT(*) AS TotalRows,
+    COUNT(Last) AS NonNullCount,
+    COUNT(*) - COUNT(Last) AS MissingCount,
+    (COUNT(Last) * 100.0) / COUNT(*) AS NonNullPercentage
+FROM stocks.stocks27
+UNION
+</pre>
+
+![Result](https://iili.io/JzpwkKu.jpg)
+
+### 2. Data Analysis
 
 2.1 Average Volume and Number of Stocks by Sector
 
@@ -109,7 +130,7 @@ HAVING AVG(CASE WHEN `Last` <= 30 THEN `Last` ELSE NULL END) IS NOT NULL;
 
 ![Result](https://iili.io/JzpzNdx.jpg)
 
-###3. Special Queries
+### 3. Special Queries
 3.1 Upcoming Ex-Dividend Dates
 
 <pre>
@@ -142,22 +163,78 @@ ORDER BY `HTB Rate` DESC;
 ![Result](https://iili.io/Jzp5tI4.jpg)
 
 
+3.3 Stocks with extremly high HTB rate
+
+
+<pre>
+SELECT Symbol, ROUND(`HTB Rate`, 2) AS RoundedHTBRate ,`S&P`
+FROM stocks27
+WHERE `HTB Rate` > 50
+ORDER BY `HTB Rate` DESC;
+</pre>
+
+
+![Result](https://iili.io/JzpVzVs.jpg)
+
+
+3.4 Stocks with low HTB rate
+
+<pre>
+SELECT Symbol, ROUND(`HTB Rate`, 2) AS RoundedHTBRate
+FROM stocks27
+WHERE `HTB Rate` BETWEEN 0 AND 10
+ORDER BY `HTB Rate` DESC;
+</pre>
+
+![Result](https://iili.io/JzpXWAB.jpg)
 
 
 
 
+3.5 Stocks with Maturity in Next 2 Years and Last(price)
+
+<pre>
+-- Retrieve symbols, modified maturity dates, and 'Last' values for stocks with maturity in the next 2 years
+SELECT Symbol, SUBSTRING(`Maturity Date`, 5) AS ModifiedMaturityDate, Last
+FROM stocks27
+WHERE STR_TO_DATE(SUBSTRING(`Maturity Date`, 5), '%b %d %Y') >= CURDATE()
+  AND STR_TO_DATE(SUBSTRING(`Maturity Date`, 5), '%b %d %Y') <= CURDATE() + INTERVAL 2 YEAR
+ORDER BY ABS(DATEDIFF(STR_TO_DATE(SUBSTRING(`Maturity Date`, 5), '%b %d %Y'), CURDATE()))
+LIMIT 0, 300;
+</pre>
+
+
+![Result](https://iili.io/Jzpl4J1.jpg)
 
 
 
 
+## Project Summary
+# Project Goals and Achievements
+
+The SQL project aimed to explore and analyze financial data within the 'stocks27' dataset. The key goals were:
+
+    Data Exploration:
+        Utilized SQL queries to display the first few rows of the dataset and provide summary statistics for the 'SYMBOL' column.
+        Employed the INFORMATION_SCHEMA to obtain detailed information about the table structure.
+
+    Data Analysis:
+        Conducted sector-wise analysis by calculating the average volume and the number of stocks for each sector.
+        Examined the distribution of stocks based on adjusted security types.
+        Investigated trends in the dataset by analyzing the average volume and stock counts for distinct 'S&P' ratings.
+        Further analyzed 'S&P' ratings, excluding values above 30, to observe their impact on average 'Last' values.
+
+    Special Queries:
+        Identified upcoming ex-dividend dates within the next 30 days, providing symbols and corresponding dates.
+        Explored stocks with high and low Hard-to-Borrow (HTB) availability, showcasing symbols and rounded HTB rates.
+        Investigated stocks with maturities in the next 2 years, retrieving symbols, modified maturity dates, and 'Last' values.
+
+        
 
 
 
 
-
-
-
-
+ ## In summary, the project accomplished its objectives by providing a thorough exploration of the dataset, conducting insightful analyses, and addressing specific financial scenarios through specialized queries. The results obtained offer valuable insights for stakeholders in the financial domain.
 
 
 
