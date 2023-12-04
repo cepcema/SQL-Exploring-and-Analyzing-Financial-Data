@@ -9,6 +9,6 @@
 SELECT * FROM stocks27 ORDER BY symbol LIMIT 10;
 </pre>
 
-![Alt Text]([URL](https://iili.io/Jzm8RkJ.jpg))
+![Result](https://iili.io/Jzm8RkJ.jpg)
 
 https://iili.io/Jzm8RkJ.jpg
