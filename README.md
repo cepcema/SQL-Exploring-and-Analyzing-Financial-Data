@@ -78,6 +78,102 @@ GROUP BY AdjustedSecurityType;
 
 ![Result](https://iili.io/JzpfzG4.jpg)
 
+2.3 Analysis by 'S&P' Rating
+
+<pre>
+-- Calculate average volume and counts for each distinct 'S&P' rating
+SELECT
+    CASE WHEN TRIM(`S&P`) = '' THEN 'No specified' ELSE TRIM(`S&P`) END AS "S&P_Rating",
+    AVG(Volume) AS AverageVolume,
+    COUNT(*) AS NumStocks
+FROM stocks27
+GROUP BY TRIM(`S&P`);
+</pre>
+
+![Result](https://iili.io/JzpoWT7.jpg)
+
+
+2.4 Analysis by 'S&P' Rating with Average Last(price)
+
+<pre>
+-- Calculate average 'Last' value for each 'S&P' rating, excluding values higher than 30
+SELECT
+    CASE WHEN TRIM(`S&P`) = '' THEN 'No specified' ELSE TRIM(`S&P`) END AS "S&P_Rating",
+    ROUND(AVG(CASE WHEN `Last` <= 30 THEN `Last` ELSE NULL END), 2) AS AverageLast,
+    AVG(Volume) AS AverageVolume,
+    COUNT(*) AS NumStocks
+FROM stocks27
+GROUP BY TRIM(`S&P`)
+HAVING AVG(CASE WHEN `Last` <= 30 THEN `Last` ELSE NULL END) IS NOT NULL;
+</pre>
+
+![Result](https://iili.io/JzpzNdx.jpg)
+
+###3. Special Queries
+3.1 Upcoming Ex-Dividend Dates
+
+<pre>
+-- Retrieve symbols and corresponding ex-dividend dates within the next 30 days
+SELECT DISTINCT Symbol, `Ex-Dividend` AS ExDivDate
+FROM stocks27
+WHERE STR_TO_DATE(`Ex-Dividend`, '%a %b %d %Y') BETWEEN CURDATE() AND CURDATE() + INTERVAL 30 DAY
+ORDER BY DAY(STR_TO_DATE(`Ex-Dividend`, '%a %b %d %Y'));
+</pre>
+
+
+![Result](https://iili.io/JzpTuFs.jpg)
+
+3.2 High and Low HTB Availability
+
+<pre>
+-- Retrieve symbols and corresponding rounded HTB rates for high availability
+SELECT Symbol, ROUND(`HTB Rate`, 2) AS RoundedHTBRate
+FROM stocks27
+WHERE `HTB Rate` > 50
+ORDER BY `HTB Rate` DESC;
+
+-- Retrieve symbols and corresponding rounded HTB rates for low availability
+SELECT Symbol, ROUND(`HTB Rate`, 2) AS RoundedHTBRate
+FROM stocks27
+WHERE `HTB Rate` BETWEEN 0 AND 10
+ORDER BY `HTB Rate` DESC;
+</pre>
+
+![Result](https://iili.io/Jzp5tI4.jpg)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
