@@ -3,9 +3,10 @@
 
 
 1.1 Exploring the Dataset
+
 <pre>
-```sql
 -- Display the first few rows of the dataset
 SELECT * FROM stocks27 ORDER BY symbol LIMIT 10;
-```
 </pre>
+
+![Alt Text]([URL](https://freeimage.host/i/Jzm8RkJ)https://freeimage.host/i/Jzm8RkJ)
