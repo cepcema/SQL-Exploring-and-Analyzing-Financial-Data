@@ -1,8 +1,8 @@
 ### SQL Project: Exploring and Analyzing Financial Data
-##1. Exploring the Dataset
+##1 Exploring the Dataset
 
 
-1.1 Exploring the Dataset
+1.1 First Few Rows
 
 <pre>
 -- Display the first few rows of the dataset
@@ -49,14 +49,34 @@ GROUP BY AdjustedSector;
 
 ![Result](https://iili.io/Jzpd1Dv.jpg)
 
+###2. Data Analysis
 
+2.1 Average Volume and Number of Stocks by Sector
 
+<pre>
+-- Calculate the average volume and the number of stocks for each sector
+SELECT
+    CASE WHEN Sector = '' THEN 'No specified' ELSE Sector END AS AdjustedSector,
+    AVG(Volume) AS AverageVolume,
+    COUNT(*) AS NumStocks
+FROM stocks27
+GROUP BY AdjustedSector;
+</pre>
 
+![Result](https://iili.io/JzpFxNs.jpg)
 
+2.2 Number of Stocks by Adjusted Security Type
 
+<pre>
+-- Calculate the number of stocks for each adjusted security type
+SELECT
+    CASE WHEN `Security Type` = '' THEN 'No specified' ELSE `Security Type` END AS AdjustedSecurityType,
+    COUNT(*) AS NumStocks
+FROM stocks27
+GROUP BY AdjustedSecurityType;
+</pre>
 
-
-
+![Result](https://iili.io/JzpfzG4.jpg)
 
 
 
