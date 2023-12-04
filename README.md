@@ -1,5 +1,8 @@
 ### SQL Project: Exploring and Analyzing Financial Data
-##1 Exploring the Dataset
+
+![Result](https://iili.io/JzyxFdx.jpg)
+
+## 1 Exploring the Dataset
 
 
 1.1 First Few Rows
