@@ -9,4 +9,4 @@
 SELECT * FROM stocks27 ORDER BY symbol LIMIT 10;
 </pre>
 
-![Alt Text]([URL](https://freeimage.host/i/Jzm8RkJ)https://freeimage.host/i/Jzm8RkJ)
+![result]([URL](https://freeimage.host/i/Jzm8RkJ)https://freeimage.host/i/Jzm8RkJ)
